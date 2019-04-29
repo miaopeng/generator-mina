@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/user/index"
+  ],
+  "window": {
+    "backgroundColor": "#f4f4f4",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "backgroundColor": "#fafafa",
+    "borderStyle": "white",
+    "selectedColor": "#B61E00",
+    "color": "#999",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/images/home_normal@2x.png",
+        "selectedIconPath": "static/images/home_selected@2x.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "iconPath": "static/images/me_normal@2x.png",
+        "selectedIconPath": "static/images/me_selected@2x.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

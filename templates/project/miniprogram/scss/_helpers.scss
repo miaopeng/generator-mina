@@ -1,0 +1,142 @@
+@import './variables';
+
+/*
+ * Custom Flexbox Helper Classes
+ */
+.flex {
+  display: flex;
+
+  &.center-all {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &.items-start {
+    align-items: flex-start;
+  }
+  &.items-center {
+    align-items: center;
+  }
+  &.items-end {
+    align-items: flex-end;
+  }
+
+  &.cell {
+    flex: 1;
+  }
+
+  &.flex-column {
+    flex-direction: column;
+    &.top {
+      align-content: flex-start;
+    }
+    &.bottom {
+      align-content: flex-end;
+    }
+    &.vertical-center {
+      align-content: center;
+    }
+    &.space-between {
+      align-content: space-between;
+    }
+    &.space-around {
+      align-content: space-around;
+    }
+  } // end column
+
+  &.flex-row {
+    flex-direction: row;
+    &.wrap {
+      flex-flow: row wrap;
+    }
+    &.top {
+      align-items: flex-start;
+    }
+    &.bottom {
+      align-items: flex-end;
+    }
+    &.vertical-center {
+      align-items: center;
+    }
+    &.baseline {
+      align-items: baseline;
+    }
+    &.stretch {
+      align-items: stretch;
+    }
+  } // end row
+
+  // along main axis
+  &.start {
+    justify-content: flex-start;
+  }
+  &.end {
+    justify-content: flex-end;
+  }
+  &.center {
+    justify-content: center;
+  }
+  &.space-between {
+    justify-content: space-between;
+  }
+  &.space-around {
+    justify-content: space-around;
+  }
+} // end flexbox helpers
+
+.flex-1 {
+  flex: 1;
+}
+.flex-2 {
+  flex: 2;
+}
+.flex-3 {
+  flex: 3;
+}
+
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+.fixed {
+  position: fixed;
+  &.bottom {
+    bottom: 0;
+  }
+  &.top {
+    top: 0;
+  }
+}
+
+.overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.full {
+  height: 100vh !important;
+}
+
+.block {
+  width: 100vw !important;
+}
+
+.fill-height {
+  height: 100% !important;
+}
+.fill-width {
+  width: 100% !important;
+}
+
+.zindex-1 {
+  z-index: 1 !important;
+}
+.zindex-2 {
+  z-index: 2 !important;
+}

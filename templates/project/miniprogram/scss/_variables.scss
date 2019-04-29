@@ -1,0 +1,93 @@
+$color-brand: #b51e00;
+$color-light: #666;
+$color-back: #f7f0ed;
+$color-price: #b4282d;
+$blue: #3f9be9;
+
+// Color
+$primary-color: $color-brand;
+$info-color: #2db7f5;
+$success-color: #19be6b;
+$warning-color: #ff9900;
+$error-color: #ed3f14;
+$link-color: #2d8cf0;
+$link-hover-color: tint($link-color, 20%);
+$link-active-color: shade($link-color, 5%);
+$selected-color: fade($primary-color, 90%);
+$tooltip-color: #fff;
+$subsidiary-color: #80848f;
+$rate-star-color: #f5a623;
+
+$title-color: #1c2438;
+$text-color: #495060;
+
+$background-color-base: #f7f7f7; // base
+
+// Colors in Miniprogram
+$wx-window-bg-color: $color-brand;
+$wx-window-navbar-bg-color: $color-brand;
+
+// Border color
+$border-color-base: #dddee1; // outside
+$border-color-split: #e9eaec; // inside
+
+// Size
+$size-grid-icon: 28px;
+$size-font-base: 14px;
+$size-font-small: 12px;
+
+// Spacer
+$spacers: (
+  0: 0,
+  1: 8px,
+  2: 16px,
+  3: 24px
+);
+
+// Button
+$btn-font-weight: normal;
+$btn-padding-base: 6px 15px;
+$btn-padding-large: 6px 15px 7px 15px;
+$btn-padding-small: 2px 7px;
+$btn-font-size: 12px;
+$btn-font-size-large: 14px;
+$btn-border-radius: 4px;
+$btn-border-radius-small: 3px;
+$btn-group-border: shade($primary-color, 5%);
+
+$btn-disable-color: #bbbec4;
+$btn-disable-bg: $background-color-base;
+$btn-disable-border: $border-color-base;
+
+$btn-default-color: $text-color;
+$btn-default-bg: $background-color-base;
+$btn-default-border: $border-color-base;
+
+$btn-primary-color: #fff;
+$btn-primary-bg: $primary-color;
+
+$btn-ghost-color: $text-color;
+$btn-ghost-bg: transparent;
+$btn-ghost-border: $border-color-base;
+
+$btn-circle-size-large: 48px;
+$btn-circle-size: 44px;
+$btn-circle-size-small: 40px;
+
+// Animation
+$animation-time: 0.3s;
+$transition-time: 0.2s;
+$ease-in-out: ease-in-out;
+
+// Z-index
+$zindex-adjust-hue: 8;
+$zindex-affix: 10;
+$zindex-back-top: 10;
+$zindex-select: 900;
+$zindex-modal: 1000;
+$zindex-message: 1010;
+$zindex-notification: 1010;
+$zindex-tooltip: 1060;
+$zindex-transfer: 1060;
+$zindex-loading-bar: 2000;
+$zindex-adjust-hue-fullscreen: 2010;

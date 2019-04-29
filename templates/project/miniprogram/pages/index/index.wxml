@@ -1,0 +1,3 @@
+<view class="container flex full center-all">
+  <view class="hello">Hello</view>
+</view>;

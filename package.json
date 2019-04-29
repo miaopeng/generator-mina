@@ -1,0 +1,44 @@
+{
+  "name": "slush-mina",
+  "version": "1.0.0",
+  "description": "A simple slush generator for wechat miniprogram",
+  "main": "slushfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miaopeng/slush-mina"
+  },
+  "bugs": {
+    "url": "https://github.com/miaopeng/slush-mina/issues"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release:tag": "git tag $npm_package_version && git push --tags"
+  },
+  "keywords": [
+    "slush",
+    "slushgenerator",
+    "wechat",
+    "miniprogram",
+    "generator",
+    "weapp",
+    "mina"
+  ],
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-conflict": "^0.4.0",
+    "gulp-filter": "^5.1.0",
+    "gulp-install": "^1.1.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-template": "^5.0.0",
+    "iniparser": "^1.0.5",
+    "inquirer": "^6.2.2",
+    "ora": "^3.2.0"
+  },
+  "author": {
+    "name": "Peng Miao",
+    "email": "mios426@gmail.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/miaopeng/slush-mina#readme",
+  "devDependencies": {}
+}

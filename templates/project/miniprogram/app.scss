@@ -1,0 +1,53 @@
+@import 'scss/variables';
+@import 'scss/reset';
+
+page {
+  font-family: PingFangSC-Light, helvetica, 'Heiti SC';
+  font-size: 14px;
+  color: #333;
+  background-color: #f4f4f4;
+}
+
+.container {
+  width: 100%;
+  background-color: #f4f4f4;
+  &.mask {
+    filter: blur(10px);
+  }
+
+  .header {
+    width: 100%;
+  }
+  .main {
+    width: 100%;
+  }
+  .footer {
+    width: 100%;
+  }
+}
+
+button[type='sub'] {
+  background-color: #dedede;
+  color: #666;
+}
+
+.section {
+  margin-top: 12rpx;
+  width: 100%;
+}
+.section-title {
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(69, 90, 100, 0.6);
+  padding: 20px 15px 15px;
+}
+
+// iPhoneX safe area
+.safe-bottom {
+  padding-bottom: 34px;
+}
+
+@import 'scss/typo';
+@import 'scss/helpers';
+@import 'scss/spacing';

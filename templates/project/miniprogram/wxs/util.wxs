@@ -1,0 +1,234 @@
+var ORDER_STATUS = require('./constants.wxs').ORDER_STATUS;
+var ORDER_STATUS_KEYS = require('./constants.wxs').ORDER_STATUS_KEYS;
+
+var cloud_asset_host = 'https://7072-pro-a2add4-1258707365.tcb.qcloud.la';
+var cloud_pic_path = '/themes/default/pic';
+var cloud_asset_suffix = '?sign=bd3cef10fc29d2f3cc4b8c03633b6c3d&t=1551151041';
+var voucherOrderStatusMap = [
+  '等待中',
+  '提取中',
+  '提取完成',
+  '配送中',
+  '配送完成',
+];
+
+var TOKEN_LOG_TYPE_DISCOUNTED =  0; // 用于购买商品时抵扣现金
+var TOKEN_LOG_TYPE_REWARDED =  1; // 收到分销奖励
+var TOKEN_LOG_TYPE_GRANTED =  2; // 收到平台发放
+
+var VOUCHER_LOG_TYPE_SHOPPING = 0; // 购买商品获得
+var VOUCHER_LOG_TYPE_SELL = 1; // 出售
+var VOUCHER_LOG_TYPE_SEND_GIFT = 2; // 赠出
+var VOUCHER_LOG_TYPE_PICKUP = 3; // 提取
+var VOUCHER_LOG_TYPE_GET_GIFT = 4; // 获得好友赠送
+
+function getPic(picName) {
+  return cloud_asset_host + cloud_pic_path + picName + cloud_asset_suffix;
+}
+
+function price(num) {
+  return num.toFixed(2);
+}
+
+function now() {
+  return getDate();
+}
+
+function tokenValue(tokenAmount) {
+  return parseFloat(tokenAmount / 10).toFixed(2);
+}
+
+function maskedMobile(mobile) {
+  return mobile.slice(0, 3) + '****' + mobile.slice(-4);
+}
+
+
+/**
+ * Replace target text with replace text
+ * @param String target text
+ * @param String replace text
+ * 
+ * e.g.
+ * 
+ * sub('my {1} is {0}', 'Colin', 'name')
+ * # my name is Colin
+ *
+ * index is only support 0~9 
+ * ...
+ */
+function sub() {
+  // eslint-disable-next-line no-useless-escape
+  var re = getRegExp('({\d})', 'g');
+  var text = arguments[0];
+  var args = [];
+
+  if (!arguments.length) return '';
+
+  for (var index = 1; index < arguments.length; index++) {
+    args[index - 1] = arguments[index];
+  }
+
+  text = text.replace(re, function(match) {
+    return args[parseInt(match[1], 10)] || '';
+  });
+  return text;
+}
+
+function totalPrice(price, useToken, tokenAmount) {
+  var total = parseFloat(price);
+  if (useToken && tokenAmount > 0) {
+    total -= parseFloat(tokenAmount) / 10;
+  }
+  total = Math.max(total, 0);
+  return total.toFixed(2);
+}
+
+// 订单当前状态文字
+function orderStatus(code) {
+  var statusText = '未知';
+  for (var i = 0; i < ORDER_STATUS_KEYS.length; i++) {
+    var key = ORDER_STATUS_KEYS[i];
+    if (ORDER_STATUS[key] && ORDER_STATUS[key].CODE === code) {
+      statusText = ORDER_STATUS[key].TEXT;
+      break;
+    }
+  }
+  return statusText;
+}
+
+// 提取订单当前状态文字
+function voucherOrderStatus(code) {
+  return voucherOrderStatusMap[code] ? voucherOrderStatusMap[code] : '未知';
+}
+
+// 是否为已取消订单
+function isCanceledOrder(code) {
+  return code === 1;
+}
+
+// 是否为待付款订单
+function isPendingOrder(code) {
+  return code === 0;
+}
+
+// 取得商品缩略图地址
+function goodsThumbnail(goods) {
+  return goods && goods.listPicUrl || '/static/images/noimage.png';
+}
+
+// 获取完整地址
+function getFullAddress(address) {
+  if (!address) return '';
+  return [address.provinceName, address.cityName, address.countyName, address.detailInfo].join(' ');
+}
+
+function tokenLog(log) {
+  switch (log.source) {
+    case TOKEN_LOG_TYPE_GRANTED:
+      return '获得平台发放的 ' + log.amount +' 个珍久令';
+    case TOKEN_LOG_TYPE_REWARDED:
+      return '获得分销奖励的 ' + log.amount +' 个珍久令';
+    case TOKEN_LOG_TYPE_DISCOUNTED:
+      return '消耗了 ' + log.amount +' 个珍久令用于购买商品';
+    default:
+      break;
+  }
+}
+
+
+
+function totalCartPrice(products) {
+    var price = 0;
+    for (var i= 0; i < products.length; i++) {
+      var p = products[i];
+      if (p.checked) {
+        price = price + parseInt(p.retailProductPrice, 10) * p.number;
+      }
+    }
+    return price * 100;
+  }
+
+function anyChecked(products) {
+    for (var i= 0; i < products.length; i++) {
+      var p = products[i];
+      if (p.checked) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+module.exports = {
+  anyChecked: anyChecked,
+  getPic: getPic,
+  getFullAddress: getFullAddress,
+  price: price,
+  maskedMobile: maskedMobile,
+  now: now,
+  sub: sub,
+  tokenValue: tokenValue,
+  tokenLog: tokenLog,
+  totalPrice: totalPrice,
+  totalCartPrice: totalCartPrice,
+  orderStatus: orderStatus,
+  voucherOrderStatus: voucherOrderStatus,
+  isCanceledOrder: isCanceledOrder,
+  isPendingOrder: isPendingOrder,
+  goodsThumbnail: goodsThumbnail,
+}
+
+module.exports.isPendingPaymentOrder = function(orderStatus) {
+  return orderStatus === ORDER_STATUS.PENDING.CODE;
+}
+module.exports.isReducedToken = function (log) {
+  return log && log.source === TOKEN_LOG_TYPE_DISCOUNTED;
+}
+module.exports.cls = function () {
+  var classes = [];
+
+  for (var i = 0; i < arguments.length; i++) {
+    var arg = arguments[i];
+    if (!arg) continue;
+
+    if (typeof arg === 'string') {
+      classes.push(arg);
+    } else if (arg.constructor === 'Array' && arg.length >= 2) {
+      if (arg[1] && typeof arg[0] === 'string') {
+        classes.push(arg[0]);
+      }
+    }
+  }
+
+  return classes.join(' ');
+};
+
+module.exports.isShippingVoucherOrder = function (code) {
+  return code === 3;
+}
+
+module.exports.voucherLog = function voucherLog(log) {
+  switch (log.source) {
+    case VOUCHER_LOG_TYPE_SHOPPING:
+      return '购买商品获得 ' + log.amount +' 张 "'+ log.voucherName +'"';
+    case VOUCHER_LOG_TYPE_SELL:
+      return '出售了 ' + log.amount +' 张酒劵';
+    case VOUCHER_LOG_TYPE_SEND_GIFT:
+      return '赠送出 ' + log.amount +' 张酒劵给好友';
+    case VOUCHER_LOG_TYPE_PICKUP:
+      return '提取了 ' + log.amount +' 张酒劵';
+    case VOUCHER_LOG_TYPE_GET_GIFT:
+      return '收到 ' + log.sourceNickname +' 赠送的 ' + log.amount +' 张酒劵';
+    default:
+      break;
+  }
+}
+
+module.exports.shortDate = function (date) {
+  var ymd = date.split(' ')[0];
+  var d = getDate(ymd);
+  var Y = d.getFullYear();
+  var M = d.getMonth() + 1;
+  var D = d.getDate();
+  return Y + '年' + M + '月' + D + '日';
+}

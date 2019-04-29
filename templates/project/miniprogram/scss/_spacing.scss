@@ -1,0 +1,17 @@
+@each $prop, $abbr in (margin:m, padding: p) {
+  @each $size, $length in $spacers {
+    .#{$abbr}#{$size} { #{$prop}: $length !important; }
+    .#{$abbr}t#{$size} { #{$prop}-top: $length !important; }
+    .#{$abbr}b#{$size} { #{$prop}-bottom: $length !important; }
+    .#{$abbr}l#{$size} { #{$prop}-left: $length !important; }
+    .#{$abbr}r#{$size} { #{$prop}-right: $length !important; }
+    .#{$abbr}x#{$size} {
+      #{$prop}-left: $length !important;
+      #{$prop}-right: $length !important;
+    }
+    .#{$abbr}y#{$size} {
+      #{$prop}-top: $length !important;
+      #{$prop}-bottom: $length !important;
+    }
+  }
+}
