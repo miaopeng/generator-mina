@@ -16,35 +16,15 @@ const template = require('gulp-template');
 const filter = require('gulp-filter');
 const inquirer = require('inquirer');
 const ora = require('ora');
-
-const format = (string) => {
-  let username = string ? string.toLowerCase() : '';
-  return username.replace(/\s/g, '');
-}
-
-const defaults = (() => {
-  let homeDir = process.env.Home || process.env.HOMEPATH || process.env.USERPROFILE;
-  let workingDirName = process.cwd().split('/').pop().split('\\').pop();
-  let osUserName = homeDir && homeDir.split('/').pop() || 'root';
-  let configFile = homeDir + '/.gitconfig';
-  let user = {};
-
-  if (require('fs').existsSync(configFile)) {
-    user = require('iniparser').parseSync(configFile).user;
-  }
-  return {
-    templateName: workingDirName,
-    username: format(user.name) || osUserName,
-    authorEmail: user.email || ''
-  };
-})();
+const userName = require('git-user-name');
+const workingDirName = process.cwd().split('/').pop().split('\\').pop();
 
 gulp.task('default', function (done) {
-
-  let prompts = [
-    { type: 'input', name: 'projectName', message: '您的项目名称是？', default: defaults.templateName },
+  const prompts = [
+    { type: 'input', name: 'projectName', message: '您的项目名称是？', default: workingDirName},
     { type: 'input', name: 'projectDescription', message: '您的项目描述是？' },
-    { type: 'input', name: 'authorName', message: '作者？', default: defaults.username },
+    { type: 'input', name: 'authorName', message: '作者？', default: userName || ''},
+    { type: 'confirm', name: 'needMock', message: '是否需要 mock server ？' },
     { type: 'confirm', name: 'moveon', message: '开始创建项目吗?' }
   ];
 
@@ -56,12 +36,22 @@ gulp.task('default', function (done) {
       return done();
     }
 
-    const filtered = filter(['**/package.json'], { restore: true });
+    const tplPath = __dirname + '/templates';
+    const fileGlob = [tplPath + '/**'];
 
-    gulp.src(__dirname + '/templates/**')
-      .pipe(filtered)
+    console.log('answers', answers);
+
+    if (!answers.needMock) {
+      fileGlob.push('!' + __dirname + '/templates/mock{,/**}')
+    }
+
+    const fileFilter = filter(fileGlob);
+    const tplFilter = filter(['**/package.json'], { restore: true });
+
+    gulp.src(fileGlob)
+      .pipe(tplFilter)
       .pipe(template(answers))
-      .pipe(filtered.restore)
+      .pipe(tplFilter.restore)
       .pipe(rename(function (file) {
         if (file.basename[0] === '_' && file.extname !== '.scss') {
           file.basename = '.' + file.basename.slice(1);

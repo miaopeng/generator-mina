@@ -24,6 +24,8 @@
     "mina"
   ],
   "dependencies": {
+    "git-user-email": "^0.2.2",
+    "git-user-name": "^2.0.0",
     "gulp": "^3.9.1",
     "gulp-conflict": "^0.4.0",
     "gulp-filter": "^5.1.0",
