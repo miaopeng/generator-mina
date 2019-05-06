@@ -1,3 +1,7 @@
 <view class="container flex full center-all">
-  <view class="hello">Hello</view>
-</view>;
+  <view class="text-md mb2">Cart Count: {{cart.count}}</view>
+  <view class="flex">
+    <button bindtap="inc" class="border-black px3 mr2">+</button>
+    <button bindtap="dec" class="border-black px3">-</button>
+  </view>
+</view>

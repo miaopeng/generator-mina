@@ -1,5 +1,5 @@
 const { effects } = require('../libs/redux-saga/redux-saga.umd');
-const { getCartCount } = require('../services/goods');
+const { getCartCount, updateCartCount } = require('../services/cart');
 const { noop } = require('../utils/util');
 
 const { regeneratorRuntime } = global;
@@ -21,11 +21,15 @@ exports.cart = (state = initialState, action) => {
   }
 };
 
-exports.update_cart_count = function* update({ callback = noop }) {
+exports.fetch_cart = function* fetch({ callback = noop }) {
   const res = yield getCartCount();
   if (res) {
-    const count = res.data.data.cartTotal.goodsCount;
+    const { count } = res.data;
     yield put({ type: 'set_cart_count', count });
     callback(count);
   }
+};
+
+exports.update_cart_count = function* update({ payload }) {
+  yield updateCartCount(payload);
 };

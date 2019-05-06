@@ -1,10 +1,8 @@
 import { checkUpdate } from './utils/wx';
-import user from './user';
 
 global.regeneratorRuntime = require('./libs/regenerator-runtime/runtime-module');
 
 App({
-  user,
 
   get store() {
     if (!this._store) {
@@ -15,7 +13,6 @@ App({
 
   onLaunch() {
     checkUpdate();
-    this.user.init();
     // this.store.subscribe(() => {
     //   const { cart } = this.store.getState();
     //   this.updateCartCount(cart.count);

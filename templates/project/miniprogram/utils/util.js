@@ -1,9 +1,3 @@
-import {
-  CLOUD_ASSET_HOST,
-  CLOUD_PIC_PATH,
-  CLOUD_ASSET_SUFFIX
-} from './constants';
-
 export const noop = () => {};
 
 export const save = (key, value) => {
@@ -24,37 +18,6 @@ export const load = key => {
 };
 
 export const clear = key => wx.removeStorageSync(key);
-
-export const price = num => num.toFixed(2);
-
-export const pad = val => (parseInt(val, 10) < 10 ? `0${val}` : val);
-
-export function longDate(date = Date.now()) {
-  const d = new Date(date);
-  const [Y, M, D] = [d.getFullYear(), d.getMonth(), d.getDate()];
-  const [h, m, s] = [d.getHours(), d.getMinutes(), d.getSeconds()];
-  return `${Y}-${M + 1}-${D} ${pad(h)}:${pad(m)}:${pad(s)}`;
-}
-
-export function shortDate(date = Date.now()) {
-  const d = new Date(date);
-  const [Y, M, D] = [d.getFullYear(), d.getMonth(), d.getDate()];
-  return `${Y}年${M + 1}月${D}日`;
-}
-
-export function getFullAddress(address) {
-  if (!address) return '';
-  return [
-    address.provinceName,
-    address.cityName,
-    address.countyName,
-    address.detailInfo
-  ].join(' ');
-}
-
-export function getPic(picName) {
-  return `${CLOUD_ASSET_HOST}${CLOUD_PIC_PATH}${picName}${CLOUD_ASSET_SUFFIX}`;
-}
 
 // For pages
 export function getRect(selector, all) {

@@ -1,6 +1,6 @@
 import Url from 'url-parse';
 import { request as wxRequest } from './wx';
-import { API_URL, API_URL_AUTH } from './constants';
+import { API_URL } from './constants';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -48,27 +48,6 @@ const checkStatus = response => {
   throw error;
 };
 
-const checkCode = response => {
-  console.log(
-    '[response] checking code',
-    response && response.data && response.data.code
-  );
-  if (response) {
-    const { access_token, code, msg = failMessage } = response.data || {};
-    if (code === 1 || access_token) {
-      return response;
-    }
-    const error = new Error(msg);
-    error.name = 'Request Error';
-    error.code = code;
-    error.message = msg;
-    error.statusCode = response.statusCode;
-    error.response = response;
-    throw error;
-  }
-  return response;
-};
-
 /**
  * Requests a URL, returning a promise.
  *
@@ -84,16 +63,6 @@ export default function request(url, option) {
   if (url.startsWith('/api/')) {
     const parsedURL = new Url(url.replace(/^\/api/, ''), true);
     parsedURL.set('hostname', `${API_URL}`);
-    if (app.user && app.user.token) {
-      parsedURL.set('query', {
-        ...parsedURL.query,
-        access_token: app.user.token
-      });
-    }
-    newURL = parsedURL.href;
-  } else if (url.startsWith('/auth/')) {
-    const parsedURL = new Url(url.replace(/^\/auth/, ''), true);
-    parsedURL.set('hostname', `${API_URL_AUTH}`);
     newURL = parsedURL.href;
   }
 
@@ -101,13 +70,10 @@ export default function request(url, option) {
     ...option
   };
 
-  console.log('[request] ', newURL);
-
   return wxRequest(newURL, newOptions)
     .then(checkStatus)
     .catch(e => {
       const { name, message, statusCode } = e;
-      console.log('[Request Error Catched]', newURL, name, message, statusCode);
 
       if (statusCode === 400 && message === 'Bad credentials') {
         return;
@@ -146,6 +112,5 @@ export default function request(url, option) {
             break;
         }
       }
-    })
-    .then(checkCode);
+    });
 }

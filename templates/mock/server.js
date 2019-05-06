@@ -15,7 +15,7 @@ const smallLag = simulateLatency({ min: 100, max: 500 });
 const lag = simulateLatency({ min: 800, max: 1600 });
 server.use(smallLag);
 
-server.get('/api/cart', (req, res) => {
+server.get('/api/cart/count', (req, res) => {
   res.json({
     code: 1,
     data: {
