@@ -1,35 +1,37 @@
-const { effects } = require('../libs/redux-saga/redux-saga.umd');
+const { effects: sagaEffects } = require('../libs/redux-saga/redux-saga.umd');
 const { getCartCount, updateCartCount } = require('../services/cart');
 const { noop } = require('../utils/util');
 
 const { regeneratorRuntime } = global;
-const { put } = effects;
-const initialState = {
-  count: 0
-};
+const { put } = sagaEffects;
 
-exports.cart = (state = initialState, action) => {
-  // console.log('cart reducer', action, state);
-  switch (action.type) {
-    case 'set_cart_count':
-      return {
-        ...state,
-        count: action.count
-      };
-    default:
-      return state;
+export default {
+  namespace: 'cart',
+
+  initialState: {
+    count: 0
+  },
+
+  effects: {
+    *fetch({ callback = noop }) {
+      const res = yield getCartCount();
+      if (res) {
+        const { count } = res.data;
+        yield put({ type: 'cart/set_count', count });
+        callback(count);
+      }
+    },
+
+    *update_count({ payload }) {
+      const res = yield updateCartCount(payload);
+      if (res && res.data) {
+        const { count } = res.data;
+        yield put({ type: 'cart/set_count', count });
+      }
+    }
+  },
+
+  reducers: {
+    set_count: (state, { count }) => ({ ...state, count })
   }
-};
-
-exports.fetch_cart = function* fetch({ callback = noop }) {
-  const res = yield getCartCount();
-  if (res) {
-    const { count } = res.data;
-    yield put({ type: 'set_cart_count', count });
-    callback(count);
-  }
-};
-
-exports.update_cart_count = function* update({ payload }) {
-  yield updateCartCount(payload);
 };

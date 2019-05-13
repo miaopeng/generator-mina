@@ -1,10 +1,17 @@
-const { effects } = require('../libs/redux-saga/redux-saga.umd');
-const { fetch_cart, update_cart_count } = require('./cart');
+const { effects: sagaEffects } = require('../libs/redux-saga/redux-saga.umd');
+const cart = require('./cart').default;
 
-const { takeEvery } = effects;
+const { takeEvery } = sagaEffects;
 const { regeneratorRuntime } = global;
 
 exports.root = function* root() {
-  yield takeEvery('fetch_cart', fetch_cart);
-  yield takeEvery('update_cart_count', update_cart_count);
+  const { effects, namespace } = cart;
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const key in effects) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (effects.hasOwnProperty(key)) {
+      yield takeEvery(`${namespace}/${key}`, effects[key]);
+    }
+  }
 };
