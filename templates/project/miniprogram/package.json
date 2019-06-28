@@ -7,8 +7,6 @@
     "es6-promise": "^4.2.5",
     "querystringify": "^2.1.0",
     "url-parse": "^1.4.4",
-    "url-search-params": "^1.1.0",
-    "vant-weapp": "0.5.4",
-    "wxa-plugin-canvas": "^1.1.11"
+    "url-search-params": "^1.1.0"
   }
 }

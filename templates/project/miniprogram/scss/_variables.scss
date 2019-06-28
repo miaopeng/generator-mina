@@ -41,7 +41,8 @@ $spacers: (
   0: 0,
   1: 8px,
   2: 16px,
-  3: 24px
+  3: 24px,
+  a: auto,
 );
 
 // Button
@@ -79,15 +80,3 @@ $animation-time: 0.3s;
 $transition-time: 0.2s;
 $ease-in-out: ease-in-out;
 
-// Z-index
-$zindex-adjust-hue: 8;
-$zindex-affix: 10;
-$zindex-back-top: 10;
-$zindex-select: 900;
-$zindex-modal: 1000;
-$zindex-message: 1010;
-$zindex-notification: 1010;
-$zindex-tooltip: 1060;
-$zindex-transfer: 1060;
-$zindex-loading-bar: 2000;
-$zindex-adjust-hue-fullscreen: 2010;
