@@ -48,6 +48,8 @@ gulp.task('default', function (done) {
     const fileFilter = filter(fileGlob);
     const tplFilter = filter(['**/package.json'], { restore: true });
 
+    console.log('start...');
+    
     gulp.src(fileGlob)
       .pipe(tplFilter)
       .pipe(template(answers))
@@ -57,7 +59,7 @@ gulp.task('default', function (done) {
           file.basename = '.' + file.basename.slice(1);
         }
       }))
-      .pipe(conflict('./'))
+      // .pipe(conflict('./'))
       .pipe(gulp.dest('./'))
       .pipe(install({
         commands: {
