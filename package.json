@@ -28,7 +28,8 @@
   ],
   "dependencies": {
     "git-user-name": "^2.0.0",
-    "yeoman-generator": "^4.5.0"
+    "yeoman-generator": "^4.5.0",
+    "yosay": "^2.0.2"
   },
   "author": {
     "name": "Peng Miao",

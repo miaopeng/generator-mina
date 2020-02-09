@@ -3,20 +3,8 @@ import { checkUpdate } from './utils/wx';
 global.regeneratorRuntime = require('./libs/regenerator-runtime/runtime-module');
 
 App({
-
-  get store() {
-    if (!this._store) {
-      this._store = require('./redux/store').store;
-    }
-    return this._store;
-  },
-
   onLaunch() {
     checkUpdate();
-    // this.store.subscribe(() => {
-    //   const { cart } = this.store.getState();
-    //   this.updateCartCount(cart.count);
-    // });
   },
 
   toast(...args) {

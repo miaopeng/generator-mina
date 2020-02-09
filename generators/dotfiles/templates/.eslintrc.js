@@ -12,6 +12,7 @@ module.exports = {
     Component: false,
     getApp: false,
     getCurrentPages: false,
+    __wxConfig: false,
     Page: false
   },
   rules: {
