@@ -13,7 +13,7 @@
     "uglifyFileName": false
   },
   "compileType": "miniprogram",
-  "libVersion": "2.10.1",
+  "libVersion": "<%= libVersion %>",
   "appid": "<%= appid %>",
   "projectname": "<%= projectname %>",
   "packOptions": {

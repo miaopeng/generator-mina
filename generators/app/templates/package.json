@@ -5,5 +5,5 @@
   "author": "<%= author %>",
   "license": "MIT",
   "scripts": {
-  },
+  }
 }

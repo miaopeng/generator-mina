@@ -28,6 +28,7 @@
   ],
   "dependencies": {
     "git-user-name": "^2.0.0",
+    "miniprogram-versions": "^1.0.0",
     "yeoman-generator": "^4.5.0",
     "yosay": "^2.0.2"
   },

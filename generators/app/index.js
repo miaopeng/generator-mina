@@ -1,6 +1,7 @@
 const Generator = require('yeoman-generator');
 const yosay = require('yosay');
 const userName = require('git-user-name');
+const { latest } = require('miniprogram-versions');
 
 module.exports = class extends Generator {
   initializing() {
@@ -20,8 +21,7 @@ module.exports = class extends Generator {
       {
         type: 'input',
         name: 'appid',
-        message: '此小程序的 appid 是？',
-        default: ''
+        message: '此小程序的 appid 是？(可以稍后再填)'
       },
       {
         type: 'input',
@@ -34,8 +34,10 @@ module.exports = class extends Generator {
 
     this.props = await this.prompt(prompts);
     this.props.author = this.user.git.name();
+    this.props.libVersion = latest;
 
     this.log('this.props', JSON.stringify(this.props));
+    this.log('latest version', latest);
   }
 
   writing() {
@@ -46,19 +48,31 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
-      this.templatePath(`${projectroot}/project.config.json`),
+      this.templatePath(`project/project.config.json`),
       this.destinationPath(`${projectroot}/project.config.json`),
       this.props
     );
     this.fs.copyTpl(
-      this.templatePath(`package.json`),
-      this.destinationPath(`package.json`),
+      this.templatePath('package.json'),
+      this.destinationPath('package.json'),
       this.props
     );
     this.fs.copyTpl(
-      this.templatePath(`README.md`),
-      this.destinationPath(`README.md`),
+      this.templatePath('README.md'),
+      this.destinationPath('README.md'),
       this.props
     );
+    this.fs.copyTpl(
+      this.templatePath('project/miniprogram/package.json'),
+      this.destinationPath(`${projectroot}/miniprogram/package.json`),
+      this.props
+    );
+  }
+
+  end() {
+    const { projectroot } = this.props;
+    this.spawnCommand('npm', ['install'], {
+      cwd: `${projectroot}/miniprogram`
+    });
   }
 };

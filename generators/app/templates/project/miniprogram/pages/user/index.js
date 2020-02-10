@@ -1,5 +1,3 @@
-import { dispatch } from '../../redux/store';
-
 const { regeneratorRuntime } = global;
 
 const page = {
