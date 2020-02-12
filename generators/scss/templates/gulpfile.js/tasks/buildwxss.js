@@ -1,5 +1,5 @@
 const path = require('path');
-const { src, dest } = require('gulp');
+const { src, dest, watch } = require('gulp');
 const sass = require('gulp-sass');
 const rename = require('gulp-rename');
 const replace = require('gulp-replace');
@@ -31,4 +31,8 @@ function buildWxss() {
     .pipe(dest(buildPath));
 }
 
-module.exports = buildWxss;
+const watcher = function watcher() {
+  watch('project/**/*.scss', { ignoreInitial: false }, buildWxss);
+};
+
+module.exports = watcher;
