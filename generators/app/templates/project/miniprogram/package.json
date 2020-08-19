@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "es6-promise": "latest"
+    "es6-promise": "latest",
+    "clsmates": "^1.1.5"
   }
 }

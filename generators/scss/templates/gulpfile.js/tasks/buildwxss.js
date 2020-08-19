@@ -24,7 +24,10 @@ function buildWxss() {
       sass({
         errLogToConsole: true,
         outputStyle: 'compact',
-        includePaths: './project/miniprogram/scss'
+        includePaths: [
+          './project/miniprogram/scss',
+          './project/miniprogram/node_modules'
+        ]
       }).on('error', sass.logError)
     )
     .pipe(rename({ extname: '.wxss' }))

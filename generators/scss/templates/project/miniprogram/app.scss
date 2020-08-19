@@ -1,5 +1,4 @@
-@import 'scss/variables';
-@import 'scss/reset';
+@import 'clsmates/scss/reset';
 
 page {
   font-family: PingFangSC-Light, helvetica, 'Heiti SC';
@@ -48,6 +47,4 @@ button[type='sub'] {
   padding-bottom: 34px;
 }
 
-@import 'scss/typo';
-@import 'scss/helpers';
-@import 'scss/spacing';
+@import 'clsmates/scss/helpers';

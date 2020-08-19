@@ -12,8 +12,8 @@ module.exports = class extends Generator {
 
     const pkgJson = {
       scripts: {
-        buildwxss: 'gulp buildwxss'
-      }
+        buildwxss: 'gulp buildwxss',
+      },
     };
 
     // Extend or create package.json file in destination path
@@ -21,8 +21,8 @@ module.exports = class extends Generator {
   }
 
   install() {
-    this.yarnInstall(['gulp-sass', 'gulp-rename', 'gulp-replace'], {
-      dev: true
+    this.yarnInstall(['gulp', 'gulp-sass', 'gulp-rename', 'gulp-replace'], {
+      dev: true,
     });
   }
 
