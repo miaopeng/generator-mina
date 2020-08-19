@@ -1,7 +1,5 @@
 import { checkUpdate } from './utils/wx';
 
-global.regeneratorRuntime = require('./libs/regenerator-runtime/runtime-module');
-
 App({
   onLaunch() {
     checkUpdate();
